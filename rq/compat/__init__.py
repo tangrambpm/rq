@@ -69,7 +69,10 @@ else:
         try:
             return unicode(v)  # noqa
         except Exception:
-            return unicode(v, "utf-8", errors="ignore")  # noqa
+            try:
+                return unicode(v, "utf-8", errors="ignore")  # noqa
+            except Exception:
+                return str(v)
 
     string_types = (str, unicode)  # noqa
 

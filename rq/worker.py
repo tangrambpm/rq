@@ -90,6 +90,15 @@ WorkerStatus = enum(
 )
 
 
+class LazyDebugLogMessage(object):
+    def __init__(self, rv):
+        self.rv = rv
+
+    def __str__(self):
+        log_result = "{0!r}".format(as_text(text_type(self.rv)))
+        return yellow(log_result)
+
+
 class Worker(object):
     redis_worker_namespace_prefix = 'rq:worker:'
     redis_workers_keys = worker_registration.REDIS_WORKER_KEYS
@@ -813,8 +822,7 @@ class Worker(object):
 
         self.log.info('{0}: {1} ({2})'.format(green(job.origin), blue('Job OK'), job.id))
         if rv is not None:
-            log_result = "{0!r}".format(as_text(text_type(rv)))
-            self.log.debug('Result: %s', yellow(log_result))
+            self.log.debug('Result: %s', LazyDebugLogMessage(rv))
 
         if self.log_result_lifespan:
             result_ttl = job.get_result_ttl(self.default_result_ttl)

@@ -1,3 +1,7 @@
+### 0.12.1 (2020-02-06)
+- Handle some return values which raise errors when generating debug log message
+- Make debug log message evaluation lazy
+
 ### 0.12.0 (2018-07-14)
 - Added support for Python 3.7. Since `async` is a keyword in Python 3.7,
 `Queue(async=False)` has been changed to `Queue(is_async=False)`. The `async`
